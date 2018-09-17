@@ -20,6 +20,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Chapter1
                      , Chapter2
+                     , Logic
   default-extensions:  OverloadedStrings
   default-language:    Haskell2010
 

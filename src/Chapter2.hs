@@ -1,31 +1,6 @@
 module Chapter2 where
 
-(¬) :: Bool -> Bool
-(¬) True = False
-(¬) False = True
-
-(/\) :: Bool -> Bool -> Bool
-False /\ _ = False
-True /\ a = a
-
-(\/) :: Bool -> Bool -> Bool
-False \/ a = a
-True \/ _ = True
-
-infixr 2 <+>
-
-(<+>) :: Bool -> Bool -> Bool
-(<+>) = (/=)
-
-infixr 1 ==>
-
-(==>) :: Bool -> Bool -> Bool
-a ==> b = (¬) a \/ b
-
-infixr 1 <=>
-
-(<=>) :: Bool -> Bool -> Bool
-(<=>) = (==)
+import Logic
 
 formula1 :: Bool
 formula1 = formula2 p q
@@ -36,20 +11,8 @@ formula1 = formula2 p q
 formula2 :: Bool -> Bool -> Bool
 formula2 p q = (¬) p /\ ((p ==> q) <=> (¬) (q /\ (¬) p))
 
-valid1 :: (Bool -> Bool) -> Bool
-valid1 bf = bf True /\ bf False
-
 excludedMiddle :: Bool -> Bool
 excludedMiddle p = p \/ (¬) p
-
-bools :: [Bool]
-bools = [True, False]
-
-valid2 :: (Bool -> Bool -> Bool) -> Bool
-valid2 bf = and (bf <$> bools <*> bools)
-
-valid3 :: (Bool -> Bool -> Bool -> Bool) -> Bool
-valid3 bf = and (bf <$> bools <*> bools <*> bools)
 
 deMorgans :: Bool -> Bool -> Bool
 deMorgans p q = (¬) (p /\ q) <=> ((¬) p \/ (¬) q)
