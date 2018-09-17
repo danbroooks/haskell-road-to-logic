@@ -1,6 +1,7 @@
 module Chapter2 where
 
-import Logic
+import qualified Logic as L
+import           Logic
 
 formula1 :: Bool
 formula1 = formula2 p q
@@ -38,3 +39,27 @@ formula4 p q = (p <+> q) <+> q
 
 formula5 :: Bool -> Bool -> Bool
 formula5 p q = p <=> ((p <+> q) <+> q)
+
+theorem_2_10 :: Bool
+theorem_2_10 = L.all laws
+  where
+    laws =
+      [                        id ≡ (¬) . (¬)
+      ,                        id ≡ (\p -> p /\ p)
+      ,                        id ≡ (\p -> p \/ p)
+      ,                     (==>) ≡ (\p q -> (¬) p \/ q)
+      ,   (\p q -> (¬) (p ==> q)) ≡ (\p q -> p /\ (¬) q)
+      , (\p q -> (¬) p ==> (¬) q) ≡ flip (==>)
+      ,     (\p q -> p ==> (¬) q) ≡ (\p q -> q ==> (¬) p)
+      ,     (\p q -> (¬) p ==> q) ≡ (\p q -> (¬) q ==> p)
+      ,                     (<=>) ≡ (\p q -> ((p ==> q) /\ (q ==> p)))
+      ,                     (<=>) ≡ (\p q -> ((p /\ q) \/ ((¬) q /\ (¬) p)))
+      ,                      (/\) ≡ flip (/\)
+      ,                      (\/) ≡ flip (\/)
+      ,    (\p q -> (¬) (p /\ q)) ≡ (\p q -> ((¬) p \/ (¬) q))
+      ,    (\p q -> (¬) (p \/ q)) ≡ (\p q -> ((¬) p /\ (¬) q))
+      , (\p q r -> p /\ (q /\ r)) ≡ (\p q r -> (p /\ q) /\ r)
+      , (\p q r -> p \/ (q \/ r)) ≡ (\p q r -> (p \/ q) \/ r)
+      , (\p q r -> p /\ (q \/ r)) ≡ (\p q r -> (p /\ q) \/ (p /\ r))
+      , (\p q r -> p \/ (q /\ r)) ≡ (\p q r -> (p \/ q) /\ (p \/ r))
+      ]
